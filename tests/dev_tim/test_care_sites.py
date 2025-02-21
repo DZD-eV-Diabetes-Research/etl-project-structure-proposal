@@ -19,5 +19,5 @@ if __name__ == "__main__":
 from plisetl.main import run
 from plisetl.database.caresite_crud import CaresideCRUD
 
-CaresideCRUD().truncate_table()
+CaresideCRUD().truncate_table(table_not_exists_ok=True)
 run()

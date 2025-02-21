@@ -1,5 +1,6 @@
 from typing import Optional, List
 from sqlmodel import select, delete
+from sqlalchemy import exc
 from omopmodel.OMOP_5_4_sqlmodels import CareSite
 from plisetl.database._connection import get_session
 
@@ -45,10 +46,24 @@ class CaresideCRUD:
             session.commit()
         return caresites
 
-    def truncate_table(self):
+    def truncate_table(self, table_not_exists_ok=False):
         log.warning(f"Truncate table CareSite...")
         with get_session() as session:
             statement = delete(CareSite)
-            result = session.exec(statement)
-            session.commit()
-            log.warning(f"...deleted {result.rowcount} CareSites rows")
+            try:
+                result = session.exec(statement)
+                session.commit()
+                log.warning(f"...deleted {result.rowcount} CareSites rows")
+            except (exc.NoSuchTableError, exc.OperationalError) as e:
+                if (
+                    isinstance(e, exc.NoSuchTableError)
+                    or (
+                        isinstance(e, exc.OperationalError)
+                        and "no such table" in e._message()
+                    )
+                ) and table_not_exists_ok:
+                    log.info(
+                        f"...nothing to truncate. Table `CareSites` does not exists."
+                    )
+                else:
+                    raise e
