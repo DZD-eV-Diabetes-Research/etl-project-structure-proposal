@@ -14,6 +14,10 @@ db_engine = create_engine(config.SQL_DATABASE_URL, echo=config.SQL_DEBUG)
 
 # Create the database tables (only needed initially)
 def init_db():
+    """
+    Deploy the OMOP CDM Schema on the Database.
+    This does not load any vocabulary
+    """
     import omopmodel.OMOP_5_4_sqlmodels
 
     SQLModel.metadata.create_all(db_engine)

@@ -13,12 +13,14 @@ log = get_logger()
 
 class CaresideCRUD:
     def get(caresite_id: int) -> Optional[CareSite]:
+        """Read a caresite from the Database by its caresite_id"""
         caresite = None
         with get_session() as session:
             caresite = session.get(CareSite, caresite_id)
         return caresite
 
     def list_all() -> List[CareSite]:
+        """Read all CareSites from the database"""
         caresites = None
         with get_session() as session:
             caresites = session.exec(select(CareSite)).all()
@@ -40,6 +42,7 @@ class CaresideCRUD:
         return caresite
 
     def insert_bulk(self, caresites: List[CareSite]) -> List[CareSite]:
+        """Insert a list of caresites at once. This will be more perfomant compared `upsert` but does not exists check."""
         log.debug(f"Insert {len(caresites)} CareSite rows")
         with get_session() as session:
             session.add_all(caresites)
@@ -47,6 +50,7 @@ class CaresideCRUD:
         return caresites
 
     def truncate_table(self, table_not_exists_ok=False):
+        """Delete all rows from table caresite."""
         log.warning(f"Truncate table CareSite...")
         with get_session() as session:
             statement = delete(CareSite)
