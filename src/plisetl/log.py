@@ -1,7 +1,7 @@
 import logging
 import sys, os
 
-from dzdexample.config import Config
+from plisetl.config import Config
 
 config = Config()
 

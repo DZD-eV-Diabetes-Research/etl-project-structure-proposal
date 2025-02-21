@@ -13,14 +13,22 @@ if __name__ == "__main__":
     # This allows us to import local modules when running the script
     sys.path.insert(0, os.path.normpath(MODULE_PARENT_DIR))
 
-from dzdexample.database._connection import init_db
+# Now we get started and we import modules from our local project directory
 
-# Now we can import modules from our local project directory
-from dzdexample.log import get_logger
-from dzdexample.config import Config
+from plisetl.plis_etl_process import run_plis_etl
+from plisetl.database._connection import init_db
+
+
+from plisetl.log import get_logger
+from plisetl.config import Config
 
 config = Config()
 
 
 def run():
     init_db()
+    run_plis_etl()
+
+
+if __name__ == "__main__":
+    run()

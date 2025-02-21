@@ -1,11 +1,18 @@
 [project]
-name = "generic-python-project-template"
+name = "PlisETL"
 version = "0.1.0"
-description = "A template for the DZD Datamanagement"
+description = "Default template for PDM package"
 authors = [
     {name = "Tim Bleimehl", email = "bleimehl@dzd-ev.org"},
+    {name = "motey", email = "bleimehl@dzd-ev.org"},
 ]
-dependencies = ["pydantic>=2.10.6", "pydantic-settings>=2.7.1", "sqlmodel>=0.0.22"]
+dependencies = [
+    "pydantic>=2.10.6",
+    "pydantic-settings>=2.7.1",
+    "sqlmodel>=0.0.22",
+    "dzdomop>=0.4.0",
+    "requests>=2.32.3",
+]
 requires-python = ">=3.11"
 readme = "README.md"
 license = {text = "MIT"}
@@ -13,7 +20,6 @@ license = {text = "MIT"}
 [build-system]
 requires = ["pdm-backend"]
 build-backend = "pdm.backend"
-
 
 [tool.pdm]
 distribution = true

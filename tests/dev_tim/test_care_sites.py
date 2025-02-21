@@ -2,6 +2,9 @@ import os
 import sys
 from pathlib import Path
 
+dot_env_file_path = Path(Path(__file__).parent, "test_care_sites.env")
+os.environ["PLIS_ETL_DOT_ENV_FILE"] = str(dot_env_file_path.resolve())
+
 if __name__ == "__main__":
     # Get the directory where this main module is located
     MODULE_DIR = Path(Path(__file__).parent.parent.parent, "src/plisetl")
@@ -13,10 +16,8 @@ if __name__ == "__main__":
     # This allows us to import local modules when running the script
     sys.path.insert(0, os.path.normpath(MODULE_PARENT_DIR))
 
-from plisetl.utils import download_file, write_bytes_to_file
+from plisetl.main import run
+from plisetl.database.caresite_crud import CaresideCRUD
 
-
-downloaded_file_content = download_file(
-    "https://cloud.apps.dzd-ev.org/s/S8AnkZLA8n7XaKQ/download"
-)
-write_bytes_to_file(downloaded_file_content, Path(Path(__file__).parent, "test.md"))
+CaresideCRUD().truncate_table()
+run()

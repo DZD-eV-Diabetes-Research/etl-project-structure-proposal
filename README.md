@@ -1,18 +1,24 @@
-# generic-python-project-template
-Our template for a generic Python project
+# DZD ETL Process Design proposal
 
-> [!IMPORTANT]  
-> Please ignore me. I am an early work in progress!
+This is a proposal how one of our ETL Process code could be designed.
 
+## Run
 
-`pdm init`
+todo
 
-mkdir src/generic_python_project_template/database
-mkdir src/generic_python_project_template/model
+## Development
 
-touch src/generic_python_project_template/main.py
-touch src/generic_python_project_template/config.py
+Requirements:
 
-pdm add pydantic
+- Python >= 3.11
+- [Python PDM](https://pdm-project.org/latest/) for development ( https://wiki.apps.dzd-ev.org/guides/coding/python-setup )
 
-pdm add pydantic-settings
+run `pdm install` to install python modules
+
+### Start main
+
+`pdm run src/plisetl/main.py`
+
+### Hints
+
+- if you need to do some scratchbook scripts try create personal directory in `tests/`. have a look at `tests/dev_tim` for an example

@@ -170,3 +170,5 @@ cython_debug/
 # PyPI configuration file
 .pypirc
 tests/dev_tim/test.md
+export_example/
+local.sqlite
