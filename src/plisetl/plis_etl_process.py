@@ -16,6 +16,7 @@ def run_plis_etl():
     care_site_omop_data = import_and_transform_care_site(
         csv_file_name="Personenvariablen.csv"
     )
+
     log.info(
         f"Write OMOP CDM CareSites (Amount: {len(care_site_omop_data)}) into database."
     )
