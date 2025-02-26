@@ -18,4 +18,4 @@ class PersonenvariablenCSVRow(PlisCsvRowBase):
 
 
 class PersonenvariablenCSV(PlisCsvBase[PersonenvariablenCSVRow]):
-    rows: List[PersonenvariablenCSVRow]
+    pass

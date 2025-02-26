@@ -1,4 +1,4 @@
-from typing import List, Literal, TypeVar, Type, Generic, get_args
+from typing import List, Literal, TypeVar, Type, Generic, get_args, Self
 from pathlib import Path
 from pydantic import BaseModel, Field
 import csv
@@ -7,7 +7,8 @@ from plisetl.log import get_logger
 log = get_logger()
 
 # Define a generic type variable for row classes
-GenericCsvRowType = TypeVar("T", bound="PlisCsvRowBase")
+GenericCsvRowType = TypeVar("GenericCsvRowType", bound="PlisCsvRowBase")
+GenericCsvType = TypeVar("GenericCsvType", bound="PlisCsvBase")
 
 
 class PlisCsvRowBase(BaseModel):
@@ -61,8 +62,8 @@ class PlisCsvBase(BaseModel, Generic[GenericCsvRowType]):
 
     @classmethod
     def from_csv_file(
-        cls: Type["PlisCsvBase[GenericCsvRowType]"], source_csv_file_path: Path
-    ) -> Type[GenericCsvRowType]:
+        cls: Type[GenericCsvType], source_csv_file_path: Path
+    ) -> GenericCsvType:
         csv_object = cls(rows=[], headers=[], source_csv_file_path=source_csv_file_path)
         with open(source_csv_file_path, encoding="utf-8") as csv_file:
 
