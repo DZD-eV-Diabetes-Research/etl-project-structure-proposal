@@ -15,6 +15,15 @@ Requirements:
 
 run `pdm install` to install python modules
 
+### Provide Base Config
+
+create file `src/plisetl/.env` with the following minimal content (adapt `export_example` to your actuall directory that contains your Bitcare DIS Export):
+
+```
+PSEUDONYMIZATION_SECRET=123445erfsdverw_secret_string-changeme-in-production
+BITCARE_DIS_EXPORT_CSVS_DIR=export_example
+```
+
 ### Start main
 
 `pdm run src/plisetl/main.py`
