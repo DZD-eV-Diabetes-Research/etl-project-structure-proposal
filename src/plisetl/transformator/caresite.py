@@ -25,8 +25,8 @@ class CareSiteTransformator:
         ) in self.personsvariable_csv_data.get_column_values(
             "Site", distinct_values=True
         ):
-            pseudo_id_caresite = self._transform_dis_id_to_omop_id(
-                personsvariable_csv_cell_site
+            pseudo_id_caresite = pseudonymize_value_to_int(
+                personsvariable_csv_cell_site, unsalted=True
             )
             care_site_full_name = self._resolve_caresite_abbreviation(
                 personsvariable_csv_cell_site
@@ -54,13 +54,3 @@ class CareSiteTransformator:
             "UKH": "Heidelberg University Hospital",
         }
         return caresite_mapping.get(abbreviation, "Unknown")
-
-    def _transform_dis_id_to_omop_id(self, dis_id) -> int:
-        """OMOP want to an integers with a length of 10 as the id, but we onyl have the short string from the Bitcare DIS system."""
-        return (
-            int(
-                hashlib.sha256((str(dis_id)).encode("utf-8")).hexdigest(),
-                base=16,
-            )
-            % 10**10
-        )

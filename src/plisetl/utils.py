@@ -34,12 +34,16 @@ def write_bytes_to_file(content: bytes, target_file_path: str | Path) -> Path:
         file_object.write(content)
 
 
-def pseudonymize_value_to_int(value: str | int | float, length=16) -> int:
+def pseudonymize_value_to_int(
+    value: str | int | float, length=16, unsalted: bool = False
+) -> int:
+    if unsalted:
+        val = str(value)
+    else:
+        val = str(value) + config.PSEUDONYMIZATION_SECRET
     return (
         int(
-            hashlib.sha256(
-                (str(value) + config.PSEUDONYMIZATION_SECRET).encode("utf-8")
-            ).hexdigest(),
+            hashlib.sha256((val).encode("utf-8")).hexdigest(),
             base=16,
         )
         % 10**length

@@ -20,39 +20,32 @@ class PersonTransformator:
 
     def transform(self) -> List[omop54.Person]:
         result: List[omop54.Person] = []
-        for (
-            personsvariable_csv_cell_patient
-        ) in self.personsvariable_csv_data.get_column_values(
-            "PatientID", distinct_values=True
-        ):
-            pseudo_id_person = self.pseudonymize_value_to_int(
-                personsvariable_csv_cell_patient
+        for personsvariable_csv_row_patient in self.personsvariable_csv_data.rows:
+            pseudo_id_person = pseudonymize_value_to_int(
+                personsvariable_csv_row_patient.PatientID
             )
 
-        for (
-            personsvariable_csv_cell_geschlecht
-        ) in self.personsvariable_csv_data.get_column_values("Geschlecht"):
-            if self.Geschlecht == "weiblich":
+            year_of_birth = personsvariable_csv_row_patient.Geburtsjahr
+
+            gender_concept_id = 0
+            if personsvariable_csv_row_patient.Geschlecht == "weiblich":
                 gender_concept_id = 8532
 
-            elif self.Geschlecht == "männlich":
+            elif personsvariable_csv_row_patient.Geschlecht == "männlich":
                 gender_concept_id = 8507
 
-            else:
-                gender_concept_id = 0
-
-            pseudo_id_person = self.pseudonymize_value_to_int(
-                personsvariable_csv_cell_geschlecht
+            care_site_id = pseudonymize_value_to_int(
+                personsvariable_csv_row_patient.Site, unsalted=True
             )
-
             result.append(
                 omop54.Person(
                     person_id=pseudo_id_person,
-                    year_of_birth=self.Geburtsjahr,
+                    year_of_birth=year_of_birth,
                     gender_concept_id=gender_concept_id,
                     race_concept_id=0,
                     ethnicity_concept_id=0,
-                    # care_site_id=pseudo_id_caresite,  # careside and location id makes no sense here. it should be an id of an existing omop54.Location instance not some random str
+                    care_site_id=care_site_id,
                 )
             )
+
         return result

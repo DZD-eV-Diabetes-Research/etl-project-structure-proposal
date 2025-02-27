@@ -12,11 +12,11 @@ log = get_logger()
 
 
 class CaresideCRUD:
-    def get(caresite_id: int) -> Optional[CareSite]:
-        """Read a caresite from the Database by its caresite_id"""
+    def get(care_site_id: int) -> Optional[CareSite]:
+        """Read a caresite from the Database by its care_site_id"""
         caresite = None
         with get_session() as session:
-            caresite = session.get(CareSite, caresite_id)
+            caresite = session.get(CareSite, care_site_id)
         return caresite
 
     def list_all() -> List[CareSite]:
