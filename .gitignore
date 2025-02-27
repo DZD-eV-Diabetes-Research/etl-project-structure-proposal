@@ -172,3 +172,12 @@ cython_debug/
 tests/dev_tim/test.md
 export_example/
 local.sqlite
+
+# Datafiles and Databases
+*.csv
+*.db
+
+cdm_source.db
+cdm_source_nora.db
+cdm_source_athena_241114.db
+dataimport_bitcare/
